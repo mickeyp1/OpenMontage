@@ -472,6 +472,7 @@ Key capability families to look for in the output:
 - **video_post** — Composition, stitching, trimming (FFmpeg-based, always local).
 - **audio_processing** — Mixing, enhancement (FFmpeg-based, always local).
 - **analysis** — Transcription, scene detection, frame sampling.
+- **research** — Full-page scraping and web search with content extraction (`firecrawl_research`), for pulling complete source text instead of a search snippet during the research stage.
 - **avatar** — Talking head and lip sync generation.
 - **character_animation** — Local character specs, SVG rigs, pose libraries, action timelines, previews, and QA.
 - **enhancement** — Upscale, background removal, face enhance, color grading.
