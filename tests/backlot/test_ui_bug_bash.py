@@ -20,6 +20,19 @@ pytest.importorskip("playwright.sync_api")
 from playwright.sync_api import sync_playwright  # noqa: E402
 
 
+def _launch_chromium(pw):
+    """Launch Chromium, honoring a pre-installed binary if one is pinned.
+
+    Some environments bundle a Chromium build that doesn't match the
+    revision the installed `playwright` pip package expects, which makes
+    the default `launch()` fail even though a working browser is already
+    on disk. Set PLAYWRIGHT_CHROMIUM_EXECUTABLE to that binary's path to
+    use it directly instead of Playwright's own revision-pinned lookup.
+    """
+    executable_path = os.environ.get("PLAYWRIGHT_CHROMIUM_EXECUTABLE")
+    return pw.chromium.launch(headless=True, executable_path=executable_path or None)
+
+
 APPROVAL_CASES = [
     ("gate-research", "framework-smoke", "research", "research_brief", "Test Topic"),
     ("gate-idea", "hybrid", "idea", "brief", "Did you know?"),
@@ -182,7 +195,7 @@ def test_project_pages_fit_mobile_and_tablet_widths(staged_backlot_server):
     ]
 
     with sync_playwright() as pw:
-        browser = pw.chromium.launch(headless=True)
+        browser = _launch_chromium(pw)
         page = browser.new_page()
         try:
             for viewport in viewports:
@@ -207,7 +220,7 @@ def test_project_pages_fit_mobile_and_tablet_widths(staged_backlot_server):
 
 def test_static_navigation_invalid_route_and_active_takes(staged_backlot_server):
     with sync_playwright() as pw:
-        browser = pw.chromium.launch(headless=True)
+        browser = _launch_chromium(pw)
         page = browser.new_page(viewport={"width": 1560, "height": 1000})
         try:
             page.goto(staged_backlot_server + "/?static=1", wait_until="networkidle")
@@ -241,7 +254,7 @@ def test_every_canonical_gate_promotes_its_artifact_before_approval(
     visible_text,
 ):
     with sync_playwright() as pw:
-        browser = pw.chromium.launch(headless=True)
+        browser = _launch_chromium(pw)
         page = browser.new_page(viewport={"width": 1280, "height": 900})
         try:
             page.goto(
@@ -265,7 +278,7 @@ def test_every_canonical_gate_promotes_its_artifact_before_approval(
 
 def test_script_gate_keeps_script_visible_and_marks_pending_approval(staged_backlot_server):
     with sync_playwright() as pw:
-        browser = pw.chromium.launch(headless=True)
+        browser = _launch_chromium(pw)
         page = browser.new_page(viewport={"width": 1280, "height": 900})
         try:
             page.goto(staged_backlot_server + "/p/gate-script?static=1", wait_until="networkidle")
@@ -277,7 +290,7 @@ def test_script_gate_keeps_script_visible_and_marks_pending_approval(staged_back
 
 def test_manifest_declared_custom_gate_uses_generic_review_fallback(staged_backlot_server):
     with sync_playwright() as pw:
-        browser = pw.chromium.launch(headless=True)
+        browser = _launch_chromium(pw)
         page = browser.new_page(viewport={"width": 1280, "height": 900})
         try:
             page.goto(

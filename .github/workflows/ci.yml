@@ -39,6 +39,9 @@ jobs:
       - name: Install dependencies
         run: make install-dev
 
+      - name: Install Playwright browser
+        run: python -m playwright install --with-deps chromium
+
       - name: Run lint smoke checks
         run: make lint
 

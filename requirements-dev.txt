@@ -3,3 +3,6 @@
 pytest>=8.0
 pytest-asyncio>=0.23
 httpx2>=2.0
+# Drives the Backlot UI bug-bash suite (tests/backlot/test_ui_bug_bash.py).
+# Also needs a browser: `playwright install --with-deps chromium`.
+playwright>=1.40
