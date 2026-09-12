@@ -15,6 +15,9 @@ This stage is what separates an OpenMontage video from generic AI slop. Without 
 | Schema | `schemas/artifacts/research_brief.schema.json` | Artifact validation |
 | User input | Topic, audience hint, platform hint | Research scope |
 | Tools | Web search, web fetch | Research execution |
+| Tools (optional) | `firecrawl_research` (`registry.get_by_capability("research")`) | Full-page markdown extraction when a search snippet is too thin to pull a real quote or data point from |
+
+If `firecrawl_research` is `AVAILABLE` (check the preflight capability catalog), prefer it over a raw web-fetch when you need the complete text of a specific page — e.g. verifying a `VideoAnalysisBrief` claim, or pulling an exact statistic with surrounding context for `data_points`. It is not required: the default zero-cost web-search-only workflow below still works without it, and there is no cost to the user unless `FIRECRAWL_API_KEY` is configured.
 
 ## Process
 
