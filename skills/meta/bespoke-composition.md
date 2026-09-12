@@ -122,6 +122,11 @@ For HF assets (TTS/BGM/SFX/transcription/background-removal) read `/hyperframes-
 This is the only place you "reuse": the engine's solved problems. These are facts about how
 the framework works, not looks.
 
+If the composition pulls in a third-party npm package (a GSAP plugin, a charting or easing
+library) beyond what Remotion/HyperFrames and the skills below cover, resolve and fetch its
+current docs with `context7_docs` (`mode="resolve"` then `mode="docs"`) before writing code
+against it — don't guess an API signature from memory of a possibly-stale version.
+
 **For Remotion**, study `.agents/skills/remotion-best-practices` (19 rule files: timing,
 transitions, text-animations, transparent video, fonts, audio, sequencing, measuring text).
 You may also read the stock components in `remotion-composer/src/components/` **as a

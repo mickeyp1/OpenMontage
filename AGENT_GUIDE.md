@@ -473,6 +473,7 @@ Key capability families to look for in the output:
 - **audio_processing** — Mixing, enhancement (FFmpeg-based, always local).
 - **analysis** — Transcription, scene detection, frame sampling.
 - **research** — Full-page scraping and web search with content extraction (`firecrawl_research`), for pulling complete source text instead of a search snippet during the research stage.
+- **documentation** — Fresh, version-correct third-party library docs (`context7_docs`), for verifying an API before writing bespoke (atelier-mode) code against a package no static Layer 3 skill covers.
 - **avatar** — Talking head and lip sync generation.
 - **character_animation** — Local character specs, SVG rigs, pose libraries, action timelines, previews, and QA.
 - **enhancement** — Upscale, background removal, face enhance, color grading.
@@ -661,6 +662,8 @@ Reading order:
 3. underlying vendor skill (Layer 3) — **mandatory before calling any generation tool**
 
 **Prefer skills over source code for tool usage.** Skills exist precisely so you don't need implementation details in the common case. Layer 2 tells you *what* and *when*. Layer 3 tells you *how*. For authoring prompts, choosing parameters, or understanding usage patterns, you should be reading skills — not `.py` files.
+
+**When Layer 3 doesn't cover a package, ask Context7 instead of guessing.** Static skills cover the libraries OpenMontage uses every day, but atelier-mode composition routinely pulls in a one-off npm package (a GSAP plugin, a charting lib) no skill documents. Use `context7_docs` (`mode="resolve"` then `mode="docs"`) to fetch current, version-correct documentation straight from the library rather than writing code from a possibly-stale training-data memory of its API.
 
 **Exception: debugging, audits, and verifying the governance contract.** When a skill and a tool disagree, or when something behaves differently than the skill claims, reading the tool source is fair game — that's often the only way to catch a silent-availability bug or a stale doc string. An audit that refuses to look at the implementation will miss exactly the bugs that matter most. If you do read source to debug, consider whether the finding belongs in a skill update afterward so the next agent doesn't need to repeat the dive.
 
