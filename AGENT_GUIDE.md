@@ -668,6 +668,8 @@ Reading order:
 
 Example: Before calling `kling_video`, read its `agent_skills` → `ai-video-gen` → get Kling-specific prompt structure, camera direction syntax, and quality keywords that the model responds to best.
 
+**Context7 MCP for live library docs.** The Layer 3 skills in `.agents/skills/` are static snapshots and can drift out of date. `.mcp.json` at the repo root registers the [Context7](https://context7.com) MCP server (`npx @upstash/context7-mcp`), which fetches current, version-accurate documentation for a library on demand. Reach for it when working against a fast-moving Node/JS dependency the pipeline touches directly — Remotion, GSAP, Playwright, HyperFrames — and a Layer 3 skill's API usage looks stale or doesn't cover what you need. It supplements Layer 3, it does not replace it: still read the relevant skill first for OpenMontage-specific conventions. Optional: set `CONTEXT7_API_KEY` in your shell environment for higher rate limits (free/anonymous use works, just with a lower ceiling); it is not a `.env` variable since MCP servers read the process environment directly, not the Python-side dotenv loader.
+
 ### Layer 3 skills, by category
 
 The `.agents/skills/` directory is large. When you're not coming in through a tool's `agent_skills` pointer, use this table to find the right file by *what you're trying to do*:
